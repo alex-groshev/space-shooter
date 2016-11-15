@@ -1,28 +1,34 @@
-import { Ship } from "./ship"
+import {Game} from "./game"
 
-window.onload = function() {
-	let canvas = <HTMLCanvasElement>document.getElementById('field');
-	let ctx = canvas.getContext('2d');
-	let ship = new Ship(ctx, 150, 143);
-	ship.draw();
+var game : Game = new Game(<HTMLCanvasElement>document.getElementById('field'));
 
+function draw() {
+	game.move();
+	window.requestAnimationFrame(draw);
+}
+
+function init() {
+	game.start();
 	function onKeyDown(e) {
 		e = e || window.event;
-
-		if (e.keyCode == '38') {
+		if (e.keyCode == '32') {
+			game.shipFire();
+		}
+		else if (e.keyCode == '38') {
 			// up arrow
 		}
 		else if (e.keyCode == '40') {
 			// down arrow
 		}
 		else if (e.keyCode == '37') {
-			// left arrow
-			ship.moveLeft()
+			game.moveShipLeft();
 		}
 		else if (e.keyCode == '39') {
-			// right arrow
-			ship.moveRight();
+			game.moveShipRight();
 		}
 	}
 	document.onkeydown = onKeyDown;
-};
+	window.requestAnimationFrame(draw);
+}
+
+init();

@@ -1,4 +1,5 @@
 import { Drawable } from "./drawable"
+import { Bullet } from "./bullet"
 
 export class Ship implements Drawable {
 	private context;
@@ -33,6 +34,10 @@ export class Ship implements Drawable {
 		this.clear();
 		this.x = this.x + this.stepWidth;
 		this.draw();
+	}
+
+	public fire(): Bullet {
+		return new Bullet(this.context, this.x, this.y - 1);
 	}
 
 	private clear() {
