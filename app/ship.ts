@@ -1,3 +1,4 @@
+import { View } from "./view"
 import { Drawable } from "./drawable"
 import { Bullet } from "./bullet"
 
@@ -24,7 +25,7 @@ export class Ship implements Drawable {
 		this.context.fill();
 	}
 
-	public inView(x: number, y: number, width: number, height: number): boolean {
+	public inView(view: View): boolean {
 		return true;
 	}
 

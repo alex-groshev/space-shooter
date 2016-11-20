@@ -1,3 +1,4 @@
+import { View } from "./view"
 import { Drawable } from "./drawable"
 
 export class Bullet implements Drawable {
@@ -17,11 +18,11 @@ export class Bullet implements Drawable {
 		this.context.fillRect(this.x, this.y, 1, 1);
 	}
 
-	public inView(x: number, y: number, width: number, height: number): boolean {
-		if (this.x < x) return false;
-		if (this.x > x + width) return false;
-		if (this.y < y) return false;
-		if (this.y > y + height) return false;
+	public inView(view: View): boolean {
+		if (this.x < view.x) return false;
+		if (this.x > view.x + view.width) return false;
+		if (this.y < view.y) return false;
+		if (this.y > view.y + view.height) return false;
 		return true;
 	}
 }
