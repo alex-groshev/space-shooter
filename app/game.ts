@@ -1,3 +1,4 @@
+import { Coordinate } from "./coordinate"
 import { View } from "./view"
 import { Drawable } from "./drawable"
 import { Ship } from "./ship"
@@ -12,8 +13,8 @@ export class Game {
 	public constructor(canvas: HTMLCanvasElement) {
 		this.canvas = canvas;
 		this.context = this.canvas.getContext('2d');
-		this.view = new View(0, 0, this.canvas.width, this.canvas.height);
-		this.ship = new Ship(this.context, this.canvas.width / 2, this.canvas.height - 6);
+		this.view = new View(new Coordinate(0, 0), this.canvas.width, this.canvas.height);
+		this.ship = new Ship(this.context, new Coordinate(this.canvas.width / 2, this.canvas.height - 6));
 	}
 
 	public start() {

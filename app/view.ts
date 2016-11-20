@@ -1,12 +1,12 @@
+import { Coordinate } from "./coordinate"
+
 export class View {
-	public readonly x: number;
-	public readonly y: number;
+	public readonly coordinate: Coordinate;
 	public readonly width: number;
 	public readonly height: number;
 
-	public constructor(x: number, y: number, width: number, height: number) {
-		this.x = x;
-		this.y = y;
+	public constructor(coordinate: Coordinate, width: number, height: number) {
+		this.coordinate = coordinate;
 		this.width = width;
 		this.height = height;
 	}

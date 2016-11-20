@@ -1,3 +1,4 @@
+import { Coordinate } from "./coordinate"
 import { View } from "./view"
 import { Drawable } from "./drawable"
 import { Projectile } from "./projectile"
@@ -6,20 +7,18 @@ export class Ship implements Drawable {
 	private context;
 	private edgeSize : number = 5;
 	private stepWidth: number = 2;
-	private x: number;
-	private y: number;
+	private coordinate: Coordinate;
 
-	public constructor(context, x: number, y: number) {
+	public constructor(context, coordinate: Coordinate) {
 		this.context = context;
-		this.x = x;
-		this.y = y;
+		this.coordinate = coordinate;
 	}
 
 	public draw() {
 		this.context.beginPath();
-		this.context.moveTo(this.x, this.y);
-		this.context.lineTo(this.x - this.edgeSize, this.y + this.edgeSize);
-		this.context.lineTo(this.x + this.edgeSize, this.y + this.edgeSize);
+		this.context.moveTo(this.coordinate.x, this.coordinate.y);
+		this.context.lineTo(this.coordinate.x - this.edgeSize, this.coordinate.y + this.edgeSize);
+		this.context.lineTo(this.coordinate.x + this.edgeSize, this.coordinate.y + this.edgeSize);
 		//context.lineTo(this.x, this.y);
 		//context.stroke();
 		this.context.fill();
@@ -31,21 +30,22 @@ export class Ship implements Drawable {
 
 	public moveLeft() {
 		this.clear();
-		this.x = this.x - this.stepWidth;
+		this.coordinate = new Coordinate(this.coordinate.x - this.stepWidth, this.coordinate.y);
 		this.draw();
 	}
 
 	public moveRight() {
 		this.clear();
-		this.x = this.x + this.stepWidth;
+		this.coordinate = new Coordinate(this.coordinate.x + this.stepWidth, this.coordinate.y);
 		this.draw();
 	}
 
 	public fire(): Projectile {
-		return new Projectile(this.context, this.x, this.y - 1);
+		return new Projectile(this.context, new Coordinate(this.coordinate.x, this.coordinate.y - 1));
 	}
 
 	private clear() {
-		this.context.clearRect(this.x - this.edgeSize, this.y, this.edgeSize * 2, this.edgeSize);
+		this.context.clearRect(this.coordinate.x - this.edgeSize, this.coordinate.y,
+			this.edgeSize * 2, this.edgeSize);
 	}
 }
