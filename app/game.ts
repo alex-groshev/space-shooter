@@ -2,6 +2,7 @@ import { Coordinate } from "./coordinate"
 import { View } from "./view"
 import { Drawable } from "./drawable"
 import { Ship } from "./ship"
+import { Enemy } from "./Enemy"
 
 export class Game {
 	private canvas : HTMLCanvasElement;
@@ -25,11 +26,12 @@ export class Game {
 	}
 
 	public move() {
-		this.disposeOutOfViewObjects();
-		console.log(this.objects.length);
-		for (var i = 0; i < this.objects.length; i++) {
-			this.objects[i].draw(this.context);
+		if (this.isNewEnemyMove()) {
+			this.createEnemy();
 		}
+		this.disposeInvisibleObjects();
+		this.drawVisibleObjects();
+		this.ship.draw();
 	}
 
 	public moveShipLeft() {
@@ -44,7 +46,7 @@ export class Game {
 		this.objects.push(this.ship.fire());
 	}
 
-	private disposeOutOfViewObjects() {
+	private disposeInvisibleObjects() {
 		let objects: Drawable[] = [];
 		for (let i = 0; i < this.objects.length; i++) {
 			if (this.objects[i].inView(this.view)) {
@@ -52,5 +54,25 @@ export class Game {
 			}
 		}
 		this.objects = objects;
+	}
+
+	private drawVisibleObjects() {
+		for (var i = 0; i < this.objects.length; i++) {
+			this.objects[i].draw(this.context);
+		}
+	}
+
+	private isNewEnemyMove(): boolean {
+		return Math.random() <= 0.1;
+	}
+
+	private createEnemy() {
+		this.objects.push(new Enemy(this.context, new Coordinate(this.getRandomInt(0, this.canvas.width - 5), 0)));
+	}
+
+	private getRandomInt(min, max): number {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		return Math.floor(Math.random() * (max - min)) + min;
 	}
 }

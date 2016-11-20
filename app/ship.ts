@@ -31,13 +31,13 @@ export class Ship implements Drawable {
 	public moveLeft() {
 		this.clear();
 		this.coordinate = new Coordinate(this.coordinate.x - this.stepWidth, this.coordinate.y);
-		this.draw();
+		//this.draw();
 	}
 
 	public moveRight() {
 		this.clear();
 		this.coordinate = new Coordinate(this.coordinate.x + this.stepWidth, this.coordinate.y);
-		this.draw();
+		//this.draw();
 	}
 
 	public fire(): Projectile {

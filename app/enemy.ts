@@ -2,7 +2,8 @@ import { Coordinate } from "./coordinate"
 import { View } from "./view"
 import { Drawable } from "./drawable"
 
-export class Projectile implements Drawable {
+export class Enemy implements Drawable {
+	private edgeSize : number = 5;
 	private context;
 	private coordinate: Coordinate;
 
@@ -11,10 +12,11 @@ export class Projectile implements Drawable {
 		this.coordinate = coordinate;
 	}
 
-	public draw() {
-		this.context.clearRect(this.coordinate.x, this.coordinate.y, 1, 1);
+	public draw(context) {
+		console.log(this.coordinate.y);
+		this.context.clearRect(this.coordinate.x, this.coordinate.y, this.edgeSize, this.edgeSize);
 		this.coordinate = this.nextCoordinate();
-		this.context.fillRect(this.coordinate.x, this.coordinate.y, 1, 1);
+		this.context.fillRect(this.coordinate.x, this.coordinate.y, this.edgeSize, this.edgeSize);
 	}
 
 	public inView(view: View): boolean {
@@ -26,6 +28,6 @@ export class Projectile implements Drawable {
 	}
 
 	protected nextCoordinate(): Coordinate {
-		return new Coordinate(this.coordinate.x, this.coordinate.y - 1);
+		return new Coordinate(this.coordinate.x, this.coordinate.y + 1);
 	}
 }
