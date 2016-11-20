@@ -4,7 +4,7 @@ import { Bullet } from "./bullet"
 export class Ship implements Drawable {
 	private context;
 	private edgeSize : number = 5;
-	private stepWidth: number = 3;
+	private stepWidth: number = 2;
 	private x: number;
 	private y: number;
 
@@ -22,6 +22,10 @@ export class Ship implements Drawable {
 		//context.lineTo(this.x, this.y);
 		//context.stroke();
 		this.context.fill();
+	}
+
+	public inView(x: number, y: number, width: number, height: number): boolean {
+		return true;
 	}
 
 	public moveLeft() {
