@@ -1,7 +1,7 @@
 import { View } from "./view"
 import { Drawable } from "./drawable"
 
-export class Bullet implements Drawable {
+export class Projectile implements Drawable {
 	private context;
 	private x: number;
 	private y: number;

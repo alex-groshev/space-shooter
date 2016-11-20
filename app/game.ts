@@ -1,6 +1,6 @@
-import { View } from "./view";
-import { Drawable } from "./drawable";
-import { Ship } from "./ship";
+import { View } from "./view"
+import { Drawable } from "./drawable"
+import { Ship } from "./ship"
 
 export class Game {
 	private canvas : HTMLCanvasElement;

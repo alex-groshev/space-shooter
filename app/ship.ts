@@ -1,6 +1,6 @@
 import { View } from "./view"
 import { Drawable } from "./drawable"
-import { Bullet } from "./bullet"
+import { Projectile } from "./projectile"
 
 export class Ship implements Drawable {
 	private context;
@@ -41,8 +41,8 @@ export class Ship implements Drawable {
 		this.draw();
 	}
 
-	public fire(): Bullet {
-		return new Bullet(this.context, this.x, this.y - 1);
+	public fire(): Projectile {
+		return new Projectile(this.context, this.x, this.y - 1);
 	}
 
 	private clear() {
