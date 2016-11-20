@@ -1,6 +1,6 @@
 import { View } from "./view"
 
-export interface Drawable {
-	draw(context);
+export interface Movable {
+	move(context);
 	inView(view: View): boolean;
 }

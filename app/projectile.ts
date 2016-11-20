@@ -1,17 +1,11 @@
 import { Coordinate } from "./coordinate"
 import { View } from "./view"
-import { Drawable } from "./drawable"
+import { Movable } from "./movable"
 
-export class Projectile implements Drawable {
-	private context;
-	private coordinate: Coordinate;
+export class Projectile implements Movable {
+	public constructor(private context, private coordinate: Coordinate) { }
 
-	public constructor(context, coordinate: Coordinate) {
-		this.context = context;
-		this.coordinate = coordinate;
-	}
-
-	public draw() {
+	public move() {
 		this.context.clearRect(this.coordinate.x, this.coordinate.y, 1, 1);
 		this.coordinate = this.nextCoordinate();
 		this.context.fillRect(this.coordinate.x, this.coordinate.y, 1, 1);

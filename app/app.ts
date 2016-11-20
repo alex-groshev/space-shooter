@@ -8,7 +8,6 @@ function draw() {
 }
 
 function init() {
-	game.start();
 	function onKeyDown(e) {
 		e = e || window.event;
 		if (e.keyCode == '32') {

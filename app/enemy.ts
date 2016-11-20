@@ -1,22 +1,16 @@
 import { Coordinate } from "./coordinate"
 import { View } from "./view"
-import { Drawable } from "./drawable"
+import { Movable } from "./movable"
 
-export class Enemy implements Drawable {
+export class Enemy implements Movable {
 	private edgeSize : number = 5;
-	private context;
-	private coordinate: Coordinate;
 
-	public constructor(context, coordinate: Coordinate) {
-		this.context = context;
-		this.coordinate = coordinate;
-	}
+	public constructor(private coordinate: Coordinate) { }
 
-	public draw(context) {
-		console.log(this.coordinate.y);
-		this.context.clearRect(this.coordinate.x, this.coordinate.y, this.edgeSize, this.edgeSize);
+	public move(context) {
+		context.clearRect(this.coordinate.x, this.coordinate.y, this.edgeSize, this.edgeSize);
 		this.coordinate = this.nextCoordinate();
-		this.context.fillRect(this.coordinate.x, this.coordinate.y, this.edgeSize, this.edgeSize);
+		context.fillRect(this.coordinate.x, this.coordinate.y, this.edgeSize, this.edgeSize);
 	}
 
 	public inView(view: View): boolean {

@@ -1,20 +1,15 @@
 import { Coordinate } from "./coordinate"
 import { View } from "./view"
-import { Drawable } from "./drawable"
+import { Movable } from "./movable"
 import { Projectile } from "./projectile"
 
-export class Ship implements Drawable {
-	private context;
+export class Ship implements Movable {
 	private edgeSize : number = 5;
 	private stepWidth: number = 2;
-	private coordinate: Coordinate;
 
-	public constructor(context, coordinate: Coordinate) {
-		this.context = context;
-		this.coordinate = coordinate;
-	}
+	public constructor(private context, private coordinate: Coordinate) { }
 
-	public draw() {
+	public move(context) {
 		this.context.beginPath();
 		this.context.moveTo(this.coordinate.x, this.coordinate.y);
 		this.context.lineTo(this.coordinate.x - this.edgeSize, this.coordinate.y + this.edgeSize);
@@ -31,13 +26,11 @@ export class Ship implements Drawable {
 	public moveLeft() {
 		this.clear();
 		this.coordinate = new Coordinate(this.coordinate.x - this.stepWidth, this.coordinate.y);
-		//this.draw();
 	}
 
 	public moveRight() {
 		this.clear();
 		this.coordinate = new Coordinate(this.coordinate.x + this.stepWidth, this.coordinate.y);
-		//this.draw();
 	}
 
 	public fire(): Projectile {
