@@ -3,12 +3,12 @@ import { View } from "./view"
 import { Movable } from "./movable"
 
 export class Projectile implements Movable {
-	public constructor(private context, private coordinate: Coordinate) { }
+	public constructor(private coordinate: Coordinate) { }
 
-	public move() {
-		this.context.clearRect(this.coordinate.x, this.coordinate.y, 1, 1);
+	public move(context) {
+		context.clearRect(this.coordinate.x, this.coordinate.y, 1, 1);
 		this.coordinate = this.nextCoordinate();
-		this.context.fillRect(this.coordinate.x, this.coordinate.y, 1, 1);
+		context.fillRect(this.coordinate.x, this.coordinate.y, 1, 1);
 	}
 
 	public inView(view: View): boolean {

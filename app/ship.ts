@@ -34,7 +34,7 @@ export class Ship implements Movable {
 	}
 
 	public fire(): Projectile {
-		return new Projectile(this.context, new Coordinate(this.coordinate.x, this.coordinate.y - 1));
+		return new Projectile(new Coordinate(this.coordinate.x, this.coordinate.y - 1));
 	}
 
 	private clear() {
