@@ -23,14 +23,18 @@ export class Ship implements Movable {
 		return true;
 	}
 
+	public pixelsPerMove(): number {
+		return 5;
+	}
+
 	public moveLeft() {
 		this.clear();
-		this.coordinate = new Coordinate(this.coordinate.x - this.stepWidth, this.coordinate.y);
+		this.coordinate = new Coordinate(this.coordinate.x - this.pixelsPerMove(), this.coordinate.y);
 	}
 
 	public moveRight() {
 		this.clear();
-		this.coordinate = new Coordinate(this.coordinate.x + this.stepWidth, this.coordinate.y);
+		this.coordinate = new Coordinate(this.coordinate.x + this.pixelsPerMove(), this.coordinate.y);
 	}
 
 	public fire(): Projectile {

@@ -3,12 +3,14 @@ import { View } from "./view"
 import { Movable } from "./movable"
 
 export class Projectile implements Movable {
+	private edgeSize : number = 1;
+
 	public constructor(private coordinate: Coordinate) { }
 
 	public move(context) {
-		context.clearRect(this.coordinate.x, this.coordinate.y, 1, 1);
+		this.clear(context);
 		this.coordinate = this.nextCoordinate();
-		context.fillRect(this.coordinate.x, this.coordinate.y, 1, 1);
+		this.draw(context);
 	}
 
 	public inView(view: View): boolean {
@@ -19,7 +21,19 @@ export class Projectile implements Movable {
 		return true;
 	}
 
+	public pixelsPerMove(): number {
+		return 1;
+	}
+
+	protected clear(context) {
+		context.clearRect(this.coordinate.x, this.coordinate.y, this.edgeSize, this.edgeSize);
+	}
+
 	protected nextCoordinate(): Coordinate {
-		return new Coordinate(this.coordinate.x, this.coordinate.y - 1);
+		return this.coordinate.moveUp(this.pixelsPerMove());
+	}
+
+	protected draw(context) {
+		context.fillRect(this.coordinate.x, this.coordinate.y, this.edgeSize, this.edgeSize);
 	}
 }

@@ -1,9 +1,11 @@
 export class Coordinate {
-	public readonly x: number;
-	public readonly y: number;
+	public constructor(readonly x: number, readonly y: number) { }
 
-	public constructor(x: number, y: number) {
-		this.x = x;
-		this.y = y;
+	public moveUp(pixels: number): Coordinate {
+		return new Coordinate(this.x, this.y - pixels);
+	}
+
+	public moveDown(pixels: number): Coordinate {
+		return new Coordinate(this.x, this.y + pixels);
 	}
 }
