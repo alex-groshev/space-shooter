@@ -1,12 +1,18 @@
 import { Coordinate } from "./coordinate"
-import { View } from "./view"
 import { Movable } from "./movable"
 
-export class Enemy implements Movable {
-	private edgeSize : number = 5;
-	private visible: boolean = true;
+export class Enemy extends Movable {
+	public constructor(coordinate: Coordinate) {
+		super(coordinate);
+	}
 
-	public constructor(private coordinate: Coordinate) { }
+	public width(): number {
+		return 5;
+	}
+
+	public height(): number {
+		return 5;
+	}
 
 	public move(context) {
 		this.clear(context);
@@ -16,36 +22,8 @@ export class Enemy implements Movable {
 		}
 	}
 
-	public hide() {
-		this.visible = false;
-	}
-
-	public isVisible(): boolean {
-		return this.visible;
-	}
-
-	public inView(view: View): boolean {
-		if (this.coordinate.x < view.coordinate.x) return false;
-		if (this.coordinate.x > view.coordinate.x + view.width) return false;
-		if (this.coordinate.y < view.coordinate.y) return false;
-		if (this.coordinate.y > view.coordinate.y + view.height) return false;
-		return true;
-	}
-
 	public pixelsPerMove(): number {
 		return 1;
-	}
-
-	public getView(): View {
-		return new View(this.coordinate, this.edgeSize, this.edgeSize);
-	}
-
-	public isCollidedWith(movable: Movable): boolean {
-		return this.inView(movable.getView());
-	}
-
-	protected clear(context) {
-		context.clearRect(this.coordinate.x, this.coordinate.y, this.edgeSize, this.edgeSize);
 	}
 
 	protected nextCoordinate(): Coordinate {
@@ -53,6 +31,6 @@ export class Enemy implements Movable {
 	}
 
 	protected draw(context) {
-		context.fillRect(this.coordinate.x, this.coordinate.y, this.edgeSize, this.edgeSize);
+		context.fillRect(this.coordinate.x, this.coordinate.y, this.width(), this.height());
 	}
 }
