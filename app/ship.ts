@@ -5,7 +5,7 @@ import { Projectile } from "./projectile"
 
 export class Ship implements Movable {
 	private edgeSize : number = 5;
-	private stepWidth: number = 2;
+	private visible: boolean = true;
 
 	public constructor(private context, private coordinate: Coordinate) { }
 
@@ -19,12 +19,32 @@ export class Ship implements Movable {
 		this.context.fill();
 	}
 
+	public hide() {
+		this.visible = false;
+	}
+
+	public isVisible(): boolean {
+		return this.visible;
+	}
+
 	public inView(view: View): boolean {
+		if (this.coordinate.x < view.coordinate.x) return false;
+		if (this.coordinate.x > view.coordinate.x + view.width) return false;
+		if (this.coordinate.y < view.coordinate.y) return false;
+		if (this.coordinate.y > view.coordinate.y + view.height) return false;
 		return true;
 	}
 
 	public pixelsPerMove(): number {
 		return 5;
+	}
+
+	public getView(): View {
+		return new View(this.coordinate, this.edgeSize, this.edgeSize);
+	}
+
+	public isCollidedWith(movable: Movable): boolean {
+		return this.inView(movable.getView());
 	}
 
 	public moveLeft() {
