@@ -15,6 +15,14 @@ export class Ship extends MovableObject {
 		return 5;
 	}
 
+	protected nextCoordinate(): Coordinate {
+		return null;
+	}
+
+	protected pixelsPerMove(): number {
+		return 5;
+	}
+
 	public move(context) {
 		this.context.beginPath();
 		this.context.moveTo(this.coordinate.x, this.coordinate.y);
@@ -23,10 +31,6 @@ export class Ship extends MovableObject {
 		//context.lineTo(this.x, this.y);
 		//context.stroke();
 		this.context.fill();
-	}
-
-	public pixelsPerMove(): number {
-		return 5;
 	}
 
 	public moveLeft() {
@@ -43,7 +47,7 @@ export class Ship extends MovableObject {
 		return new Projectile(new Coordinate(this.coordinate.x, this.coordinate.y - 1));
 	}
 
-	public clear(context) {
+	protected clear(context) {
 		context.clearRect(this.coordinate.x - this.width(), this.coordinate.y, this.width() * 2, this.height());
 	}
 }

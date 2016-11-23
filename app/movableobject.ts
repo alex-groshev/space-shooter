@@ -4,16 +4,7 @@ import { Coordinate } from "./coordinate"
 export abstract class MovableObject {
 	private visible: boolean = true;
 
-	public constructor(protected coordinate: Coordinate) {
-	}
-
-	abstract height(): number;
-
-	abstract move(context);
-
-	abstract pixelsPerMove(): number;
-
-	abstract width(): number;
+	public constructor(protected coordinate: Coordinate) { }
 
 	public getView(): View {
 		return new View(this.coordinate, this.width(), this.height());
@@ -39,7 +30,27 @@ export abstract class MovableObject {
 		return this.visible;
 	}
 
-	public clear(context) {
+	public move(context) {
+		this.clear(context);
+		if (this.isVisible()) {
+			this.coordinate = this.nextCoordinate();
+			this.draw(context);
+		}
+	}
+
+	protected clear(context) {
 		context.clearRect(this.coordinate.x, this.coordinate.y, this.width(), this.height());
 	}
+
+	protected draw(context) {
+		context.fillRect(this.coordinate.x, this.coordinate.y, this.width(), this.height());
+	}
+
+	public abstract height(): number;
+
+	public abstract width(): number;
+
+	protected abstract nextCoordinate(): Coordinate;
+
+	protected abstract pixelsPerMove(): number;
 }
