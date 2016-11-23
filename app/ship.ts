@@ -3,7 +3,7 @@ import { MovableObject } from "./MovableObject"
 import { Projectile } from "./projectile"
 
 export class Ship extends MovableObject {
-	public constructor(private context, coordinate: Coordinate) {
+	public constructor(coordinate: Coordinate) {
 		super(coordinate);
 	}
 
@@ -24,22 +24,22 @@ export class Ship extends MovableObject {
 	}
 
 	public move(context) {
-		this.context.beginPath();
-		this.context.moveTo(this.coordinate.x, this.coordinate.y);
-		this.context.lineTo(this.coordinate.x - this.width(), this.coordinate.y + this.height());
-		this.context.lineTo(this.coordinate.x + this.width(), this.coordinate.y + this.height());
+		context.beginPath();
+		context.moveTo(this.coordinate.x, this.coordinate.y);
+		context.lineTo(this.coordinate.x - this.width(), this.coordinate.y + this.height());
+		context.lineTo(this.coordinate.x + this.width(), this.coordinate.y + this.height());
 		//context.lineTo(this.x, this.y);
 		//context.stroke();
-		this.context.fill();
+		context.fill();
 	}
 
-	public moveLeft() {
-		this.clear(this.context);
+	public moveLeft(context) {
+		this.clear(context);
 		this.coordinate = new Coordinate(this.coordinate.x - this.pixelsPerMove(), this.coordinate.y);
 	}
 
-	public moveRight() {
-		this.clear(this.context);
+	public moveRight(context) {
+		this.clear(context);
 		this.coordinate = new Coordinate(this.coordinate.x + this.pixelsPerMove(), this.coordinate.y);
 	}
 

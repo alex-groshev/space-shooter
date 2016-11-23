@@ -15,7 +15,7 @@ export class Game {
 	public constructor(private canvas: HTMLCanvasElement) {
 		this.context = this.canvas.getContext('2d');
 		this.view = new View(new Coordinate(0, 0), this.canvas.width, this.canvas.height);
-		this.ship = new Ship(this.context, new Coordinate(this.canvas.width / 2, this.canvas.height - 6));
+		this.ship = new Ship(new Coordinate(this.canvas.width / 2, this.canvas.height - 6));
 	}
 
 	public move() {
@@ -39,11 +39,11 @@ export class Game {
 	}
 
 	public moveShipLeft() {
-		this.ship.moveLeft();
+		this.ship.moveLeft(this.context);
 	}
 
 	public moveShipRight() {
-		this.ship.moveRight();
+		this.ship.moveRight(this.context);
 	}
 
 	public shipFire() {
