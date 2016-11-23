@@ -1,8 +1,8 @@
 import { Coordinate } from "./coordinate"
-import { Movable } from "./movable"
+import { MovableObject } from "./MovableObject"
 import { Projectile } from "./projectile"
 
-export class Ship extends Movable {
+export class Ship extends MovableObject {
 	public constructor(private context, coordinate: Coordinate) {
 		super(coordinate);
 	}

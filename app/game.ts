@@ -1,6 +1,6 @@
 import { Coordinate } from "./coordinate"
 import { View } from "./view"
-import { Movable } from "./movable"
+import { MovableObject } from "./MovableObject"
 import { Ship } from "./ship"
 import { Enemy } from "./Enemy"
 import { EnemyFactory } from "./enemyfactory"
@@ -9,8 +9,8 @@ export class Game {
 	private context;
 	private view: View;
 	private ship: Ship;
-	private projectiles: Movable[] = [];
-	private enemies: Movable[] = [];
+	private projectiles: MovableObject[] = [];
+	private enemies: MovableObject[] = [];
 
 	public constructor(private canvas: HTMLCanvasElement) {
 		this.context = this.canvas.getContext('2d');
@@ -65,7 +65,7 @@ export class Game {
 		}
 	}
 
-	private hideOutOfViewObjects(movables: Movable[]) {
+	private hideOutOfViewObjects(movables: MovableObject[]) {
 		for (let i = 0; i < movables.length; i++) {
 			if (!movables[i].inView(this.view)) {
 				movables[i].hide();
@@ -73,8 +73,8 @@ export class Game {
 		}
 	}
 
-	private disposeHiddenObjects(movables: Movable[]): Movable[] {
-		let result: Movable[] = [];
+	private disposeHiddenObjects(movables: MovableObject[]): MovableObject[] {
+		let result: MovableObject[] = [];
 		for (let i = 0; i < movables.length; i++) {
 			if (movables[i].isVisible()) {
 				result.push(movables[i]);

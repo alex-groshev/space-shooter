@@ -1,7 +1,7 @@
 import { View } from "./view"
 import { Coordinate } from "./coordinate"
 
-export abstract class Movable {
+export abstract class MovableObject {
 	private visible: boolean = true;
 
 	public constructor(protected coordinate: Coordinate) {
@@ -23,7 +23,7 @@ export abstract class Movable {
 		this.visible = false;
 	}
 
-	public isCollidedWith(movable: Movable): boolean {
+	public isCollidedWith(movable: MovableObject): boolean {
 		return this.inView(movable.getView());
 	}
 

@@ -1,7 +1,7 @@
 import { Coordinate } from "./coordinate"
-import { Movable } from "./movable"
+import { MovableObject } from "./MovableObject"
 
-export class Enemy extends Movable {
+export class Enemy extends MovableObject {
 	public constructor(coordinate: Coordinate) {
 		super(coordinate);
 	}
