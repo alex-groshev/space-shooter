@@ -27,7 +27,12 @@ export class Game {
 
 		this.hideOutOfViewObjects(this.projectiles);
 		this.hideOutOfViewObjects(this.enemies);
-		this.detectShipCollision();
+
+		if (this.isEndOfGame()) {
+			this.hintRestart();
+			return;
+		}
+
 		this.hideCollidedObjects();
 
 		this.moveObjects(this.projectiles);
@@ -58,13 +63,14 @@ export class Game {
 		this.projectiles.push(this.ship.fire());
 	}
 
-	private detectShipCollision() {
+	private isEndOfGame(): boolean {
 		for (let enemy of this.enemies) {
 			if (enemy.isCollidedWith(this.ship)) {
 				this.collide(this.ship, enemy);
-				break;
+				return true;
 			}
 		}
+		return false;
 	}
 
 	private hideCollidedObjects() {
@@ -127,5 +133,11 @@ export class Game {
 
 	private createEnemy() {
 		this.enemies.push(new EnemyFactory(this.canvas.width).create());
+	}
+
+	private hintRestart() {
+		this.context.clearRect(0, this.view.height / 2 - 25, this.view.width, 40);
+		this.context.font = "32px Courier, monospace";
+		this.context.fillText("The end. Press 'R' to restart the game.", 25, this.view.height / 2);
 	}
 }
