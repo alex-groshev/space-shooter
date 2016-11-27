@@ -19,6 +19,9 @@ export class Game {
 	}
 
 	public move() {
+		//console.log("enemies="+this.enemies.length);
+		//console.log("projectiles="+this.projectiles.length);
+
 		if (!this.ship.isVisible) {
 			return;
 		}
@@ -30,9 +33,6 @@ export class Game {
 		this.hideOutOfViewObjects(this.projectiles);
 		this.hideOutOfViewObjects(this.enemies);
 		this.hideCollidedObjects();
-
-		//console.log("enemies="+this.enemies.length);
-		//console.log("projectiles="+this.projectiles.length);
 
 		this.drawVisibleObjects();
 
@@ -76,8 +76,9 @@ export class Game {
 	}
 
 	private collide(m1: MovableObject, m2: MovableObject) {
+		let damage = m1.life;
 		m1.receiveDamage(m2.life);
-		m2.receiveDamage(m1.life);
+		m2.receiveDamage(damage);
 	}
 
 	private hideOutOfViewObjects(movables: MovableObject[]) {
