@@ -24,6 +24,8 @@ function init() {
 		}
 		else if (e.keyCode == '39') {
 			game.moveShipRight();
+		} else if (e.keyCode == '82') {
+			game.restart();
 		}
 	}
 	document.onkeydown = onKeyDown;

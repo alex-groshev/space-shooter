@@ -15,26 +15,23 @@ export class Game {
 	public constructor(private canvas: HTMLCanvasElement) {
 		this.context = this.canvas.getContext('2d');
 		this.view = new View(new Coordinate(0, 0), this.canvas.width, this.canvas.height);
-		this.ship = new Ship(new Coordinate(this.canvas.width / 2, this.canvas.height - 6));
+		this.ship = this.createShip();
 	}
 
 	public move() {
-		//console.log("enemies="+this.enemies.length);
-		//console.log("projectiles="+this.projectiles.length);
-
 		if (!this.ship.isVisible) {
 			return;
 		}
 
-		if (this.isNewEnemyAllowed()) {
-			this.createEnemy();
-		}
+		this.tryAddNewEnemy();
 
 		this.hideOutOfViewObjects(this.projectiles);
 		this.hideOutOfViewObjects(this.enemies);
+		this.detectShipCollision();
 		this.hideCollidedObjects();
 
-		this.drawVisibleObjects();
+		this.moveObjects(this.projectiles);
+		this.moveObjects(this.enemies);
 
 		this.projectiles = this.disposeHiddenObjects(this.projectiles);
 		this.enemies = this.disposeHiddenObjects(this.enemies);
@@ -50,18 +47,27 @@ export class Game {
 		this.ship.moveRight(this.context);
 	}
 
+	public restart() {
+		this.projectiles = [];
+		this.enemies = [];
+		this.ship = this.createShip();
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	}
+
 	public shipFire() {
 		this.projectiles.push(this.ship.fire());
 	}
 
-	private hideCollidedObjects() {
+	private detectShipCollision() {
 		for (let enemy of this.enemies) {
 			if (enemy.isCollidedWith(this.ship)) {
 				this.collide(this.ship, enemy);
 				break;
 			}
 		}
+	}
 
+	private hideCollidedObjects() {
 		for (let projectile of this.projectiles) {
 			if (projectile.isVisible) {
 				for (let enemy of this.enemies) {
@@ -99,12 +105,19 @@ export class Game {
 		return result;
 	}
 
-	private drawVisibleObjects() {
-		for (let projectile of this.projectiles) {
-			projectile.move(this.context);
+	private moveObjects(movables: MovableObject[]) {
+		for (let movable of movables) {
+			movable.move(this.context);
 		}
-		for (let enemy of this.enemies) {
-			enemy.move(this.context);
+	}
+
+	private createShip(): Ship {
+		return new Ship(new Coordinate(this.canvas.width / 2, this.canvas.height - 6));
+	}
+
+	private tryAddNewEnemy() {
+		if (this.isNewEnemyAllowed()) {
+			this.createEnemy();
 		}
 	}
 
