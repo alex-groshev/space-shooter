@@ -1,5 +1,5 @@
 import { Coordinate } from "./coordinate"
-import { MovableObject } from "./MovableObject"
+import { MovableObject } from "./movableobject"
 
 export class Enemy extends MovableObject {
 	public constructor(coordinate: Coordinate) {

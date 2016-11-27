@@ -3,19 +3,24 @@ import { Coordinate } from "./coordinate"
 
 export abstract class MovableObject {
 	private visible: boolean = true;
+	private remainingLife: number = 100;
 
-	public constructor(protected coordinate: Coordinate) { }
+	public get isVisible(): boolean {
+		return this.visible;
+	}
 
-	public getView(): View {
+	public get life(): number {
+		return this.remainingLife;
+	}
+
+	public get view(): View {
 		return new View(this.coordinate, this.width(), this.height());
 	}
 
-	public hide() {
-		this.visible = false;
-	}
+	public constructor(protected coordinate: Coordinate) { }
 
 	public isCollidedWith(movable: MovableObject): boolean {
-		return this.inView(movable.getView());
+		return this.inView(movable.view);
 	}
 
 	public inView(view: View): boolean {
@@ -26,15 +31,18 @@ export abstract class MovableObject {
 		return true;
 	}
 
-	public isVisible(): boolean {
-		return this.visible;
-	}
-
 	public move(context) {
 		this.clear(context);
-		if (this.isVisible()) {
+		if (this.isVisible) {
 			this.coordinate = this.nextCoordinate();
 			this.draw(context);
+		}
+	}
+
+	public receiveDamage(amount: number) {
+		this.remainingLife -= amount;
+		if (this.life <= 0) {
+			this.hide();
 		}
 	}
 
@@ -44,6 +52,10 @@ export abstract class MovableObject {
 
 	protected draw(context) {
 		context.fillRect(this.coordinate.x, this.coordinate.y, this.width(), this.height());
+	}
+
+	private hide() {
+		this.visible = false;
 	}
 
 	public abstract height(): number;

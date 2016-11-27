@@ -1,8 +1,8 @@
 import { Coordinate } from "./coordinate"
 import { View } from "./view"
-import { MovableObject } from "./MovableObject"
+import { MovableObject } from "./movableobject"
 import { Ship } from "./ship"
-import { Enemy } from "./Enemy"
+import { Enemy } from "./enemy"
 import { EnemyFactory } from "./enemyfactory"
 
 export class Game {
@@ -51,13 +51,12 @@ export class Game {
 	}
 
 	private hideCollidedObjects() {
-		for (let i = 0; i < this.projectiles.length; i++) {
-			if (this.projectiles[i].isVisible()) {
-				for (let j = 0; j < this.enemies.length; j++) {
-					if (this.enemies[j].isVisible()) {
-						if (this.projectiles[i].isCollidedWith(this.enemies[j])) {
-							this.projectiles[i].hide();
-							this.enemies[j].hide();
+		for (let projectile of this.projectiles) {
+			if (projectile.isVisible) {
+				for (let enemy of this.enemies) {
+					if (enemy.isVisible) {
+						if (projectile.isCollidedWith(enemy)) {
+							this.collide(enemy, projectile);
 						}
 					}
 				}
@@ -65,30 +64,35 @@ export class Game {
 		}
 	}
 
+	private collide(m1: MovableObject, m2: MovableObject) {
+		m1.receiveDamage(m2.life);
+		m2.receiveDamage(m1.life);
+	}
+
 	private hideOutOfViewObjects(movables: MovableObject[]) {
-		for (let i = 0; i < movables.length; i++) {
-			if (!movables[i].inView(this.view)) {
-				movables[i].hide();
+		for (let movable of movables) {
+			if (!movable.inView(this.view)) {
+				this.collide(movable, movable);
 			}
 		}
 	}
 
 	private disposeHiddenObjects(movables: MovableObject[]): MovableObject[] {
 		let result: MovableObject[] = [];
-		for (let i = 0; i < movables.length; i++) {
-			if (movables[i].isVisible()) {
-				result.push(movables[i]);
+		for (let movable of movables) {
+			if (movable.isVisible) {
+				result.push(movable);
 			}
 		}
 		return result;
 	}
 
 	private drawVisibleObjects() {
-		for (var i = 0; i < this.projectiles.length; i++) {
-			this.projectiles[i].move(this.context);
+		for (let projectile of this.projectiles) {
+			projectile.move(this.context);
 		}
-		for (var i = 0; i < this.enemies.length; i++) {
-			this.enemies[i].move(this.context);
+		for (let enemy of this.enemies) {
+			enemy.move(this.context);
 		}
 	}
 
