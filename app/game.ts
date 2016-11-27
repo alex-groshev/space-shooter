@@ -11,11 +11,13 @@ export class Game {
 	private ship: Ship;
 	private projectiles: MovableObject[] = [];
 	private enemies: MovableObject[] = [];
+	private score: number;
 
 	public constructor(private canvas: HTMLCanvasElement) {
 		this.context = this.canvas.getContext('2d');
 		this.view = new View(new Coordinate(0, 0), this.canvas.width, this.canvas.height);
 		this.ship = this.createShip();
+		this.resetScore();
 	}
 
 	public move() {
@@ -41,6 +43,8 @@ export class Game {
 		this.enemies = this.disposeHiddenObjects(this.enemies);
 
 		this.ship.move(this.context);
+
+		this.hintScore();
 	}
 
 	public moveShipLeft() {
@@ -54,6 +58,7 @@ export class Game {
 	public restart() {
 		this.projectiles = [];
 		this.enemies = [];
+		this.resetScore();
 		this.ship = this.createShip();
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
@@ -79,6 +84,9 @@ export class Game {
 					if (enemy.isVisible) {
 						if (projectile.isCollidedWith(enemy)) {
 							this.collide(enemy, projectile);
+							if (!enemy.isVisible) {
+								this.score += 100;
+							}
 						}
 					}
 				}
@@ -138,5 +146,15 @@ export class Game {
 		this.context.clearRect(0, this.view.height / 2 - 25, this.view.width, 40);
 		this.context.font = "32px Courier, monospace";
 		this.context.fillText("The end. Press 'R' to restart the game.", 25, this.view.height / 2);
+	}
+
+	private hintScore() {
+		this.context.clearRect(this.view.width - 50, 0, 50, 14);
+		this.context.font = "10px Courier, monospace";
+		this.context.fillText(this.score, this.view.width - 50, 10);
+	}
+
+	private resetScore() {
+		this.score = 0;
 	}
 }
