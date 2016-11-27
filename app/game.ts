@@ -12,6 +12,7 @@ export class Game {
 	private projectiles: MovableObject[] = [];
 	private enemies: MovableObject[] = [];
 	private score: number;
+	public isPaused: boolean = false;
 
 	public constructor(private canvas: HTMLCanvasElement) {
 		this.context = this.canvas.getContext('2d');
@@ -21,7 +22,7 @@ export class Game {
 	}
 
 	public move() {
-		if (!this.ship.isVisible) {
+		if (this.isPaused || !this.ship.isVisible) {
 			return;
 		}
 
@@ -53,6 +54,13 @@ export class Game {
 
 	public moveShipRight() {
 		this.ship.moveRight(this.context);
+	}
+
+	public pause() {
+		if (this.ship.isVisible) {
+			this.isPaused = !this.isPaused;
+			this.hintPause();
+		}
 	}
 
 	public restart() {
@@ -143,16 +151,24 @@ export class Game {
 	}
 
 	private hintRestart() {
-		this.context.clearRect(0, this.view.height / 2 - 25, this.view.width, 40);
 		this.context.font = "32px Courier, monospace";
+		this.context.clearRect(0, this.view.height / 2 - 25, this.view.width, 40);
 		this.context.fillText("The end. Press 'R' to restart the game.", 25, this.view.height / 2);
 	}
 
 	private hintScore() {
-		this.context.clearRect(this.view.width - 50, 0, 50, 14);
 		this.context.font = "10px Courier, monospace";
 		let gap = (this.score + "").length * 5 + 5;
+		this.context.clearRect(this.view.width - gap, 0, gap, 14);
 		this.context.fillText(this.score, this.view.width - gap, 10);
+	}
+
+	public hintPause() {
+		this.context.clearRect(this.view.width / 2 - 50, this.view.height / 2 - 50, 100, 40);
+		if (this.isPaused) {
+			this.context.font = "32px Courier, monospace";
+			this.context.fillText("Pause", this.view.width / 2 - 50, this.view.height / 2 - 20);
+		}
 	}
 
 	private resetScore() {
