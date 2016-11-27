@@ -151,7 +151,8 @@ export class Game {
 	private hintScore() {
 		this.context.clearRect(this.view.width - 50, 0, 50, 14);
 		this.context.font = "10px Courier, monospace";
-		this.context.fillText(this.score, this.view.width - 50, 10);
+		let gap = (this.score + "").length * 5 + 5;
+		this.context.fillText(this.score, this.view.width - gap, 10);
 	}
 
 	private resetScore() {
