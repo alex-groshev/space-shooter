@@ -23,16 +23,15 @@ export class Game {
 			return;
 		}
 
-		this.tryAddNewEnemy();
-
-		this.hideOutOfViewObjects(this.projectiles);
-		this.hideOutOfViewObjects(this.enemies);
-
 		if (this.isEndOfGame()) {
 			this.hintRestart();
 			return;
 		}
 
+		this.tryAddNewEnemy();
+
+		this.hideOutOfViewObjects(this.projectiles);
+		this.hideOutOfViewObjects(this.enemies);
 		this.hideCollidedObjects();
 
 		this.moveObjects(this.projectiles);
