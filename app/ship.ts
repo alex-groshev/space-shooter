@@ -1,8 +1,13 @@
 import { Coordinate } from "./coordinate"
 import { MovableObject } from "./movableobject"
 import { Projectile } from "./projectile"
+import { View } from "./view"
 
 export class Ship extends MovableObject {
+	public get view(): View {
+		return new View(this.coordinate.moveLeft(this.width()), this.width() * 2, this.height());
+	}
+
 	public constructor(coordinate: Coordinate) {
 		super(coordinate);
 	}
@@ -34,17 +39,23 @@ export class Ship extends MovableObject {
 	}
 
 	public moveLeft(context) {
-		this.clear(context);
-		this.coordinate = new Coordinate(this.coordinate.x - this.pixelsPerMove(), this.coordinate.y);
+		if (this.isVisible) {
+			this.clear(context);
+			this.coordinate = new Coordinate(this.coordinate.x - this.pixelsPerMove(), this.coordinate.y);
+		}
 	}
 
 	public moveRight(context) {
-		this.clear(context);
-		this.coordinate = new Coordinate(this.coordinate.x + this.pixelsPerMove(), this.coordinate.y);
+		if (this.isVisible) {
+			this.clear(context);
+			this.coordinate = new Coordinate(this.coordinate.x + this.pixelsPerMove(), this.coordinate.y);
+		}
 	}
 
 	public fire(): Projectile {
-		return new Projectile(new Coordinate(this.coordinate.x, this.coordinate.y - 1));
+		if (this.isVisible) {
+			return new Projectile(new Coordinate(this.coordinate.x, this.coordinate.y - 1));
+		}
 	}
 
 	protected clear(context) {

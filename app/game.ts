@@ -19,6 +19,10 @@ export class Game {
 	}
 
 	public move() {
+		if (!this.ship.isVisible) {
+			return;
+		}
+
 		if (this.isNewEnemyAllowed()) {
 			this.createEnemy();
 		}
@@ -51,6 +55,13 @@ export class Game {
 	}
 
 	private hideCollidedObjects() {
+		for (let enemy of this.enemies) {
+			if (enemy.isCollidedWith(this.ship)) {
+				this.collide(this.ship, enemy);
+				break;
+			}
+		}
+
 		for (let projectile of this.projectiles) {
 			if (projectile.isVisible) {
 				for (let enemy of this.enemies) {
