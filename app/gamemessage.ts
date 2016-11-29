@@ -20,10 +20,10 @@ export class GameMessage {
 	}
 
 	public pause(isPaused: boolean) {
-		this.context.clearRect(this.view.width / 2 - 50, this.view.height / 2 - 50, 100, 40);
+		this.context.clearRect(this.view.width / 2 - 50, this.view.height / 2 - 25, 100, 40);
 		if (isPaused) {
 			this.context.font = this.fontBig;
-			this.context.fillText("Pause", this.view.width / 2 - 50, this.view.height / 2 - 20);
+			this.context.fillText("Pause", this.view.width / 2 - 50, this.view.height / 2);
 		}
 	}
 }
