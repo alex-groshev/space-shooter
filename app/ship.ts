@@ -5,7 +5,7 @@ import { View } from "./view"
 
 export class Ship extends MovableObject {
 	public get view(): View {
-		return new View(this.coordinate.moveLeft(this.width()), this.width() * 2, this.height());
+		return new View(this.coordinate.moveLeft(this.width()), this.width() * 2 + 1, this.height());
 	}
 
 	public constructor(coordinate: Coordinate) {
@@ -36,6 +36,8 @@ export class Ship extends MovableObject {
 		//context.lineTo(this.x, this.y);
 		//context.stroke();
 		context.fill();
+
+		//context.strokeRect(this.coordinate.x - this.width(), this.coordinate.y, this.width() * 2 + 1, this.height());
 	}
 
 	public moveLeft(context) {

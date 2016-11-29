@@ -24,11 +24,13 @@ export abstract class MovableObject {
 	}
 
 	public inView(view: View): boolean {
-		if (this.coordinate.x < view.coordinate.x) return false;
-		if (this.coordinate.x > view.coordinate.x + view.width) return false;
-		if (this.coordinate.y < view.coordinate.y) return false;
-		if (this.coordinate.y > view.coordinate.y + view.height) return false;
-		return true;
+		if (this.coordinate.x < view.coordinate.x + view.width &&
+			this.coordinate.x + this.width() > view.coordinate.x &&
+			this.coordinate.y < view.coordinate.y + view.height &&
+			this.height() + this.coordinate.y > view.coordinate.y) {
+			return true;
+		}
+		return false;
 	}
 
 	public move(context) {
