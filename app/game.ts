@@ -1,9 +1,10 @@
 import { Coordinate } from "./coordinate"
-import { View } from "./view"
-import { MovableObject } from "./movableobject"
-import { Ship } from "./ship"
 import { Enemy } from "./enemy"
 import { EnemyFactory } from "./enemyfactory"
+import { GameMessage } from "./gamemessage"
+import { MovableObject } from "./movableobject"
+import { Ship } from "./ship"
+import { View } from "./view"
 
 export class Game {
 	private context;
@@ -12,13 +13,15 @@ export class Game {
 	private projectiles: MovableObject[] = [];
 	private enemies: MovableObject[] = [];
 	private score: number;
-	public isPaused: boolean = false;
+	private isPaused: boolean = false;
+	private gameMessage: GameMessage;
 
 	public constructor(private canvas: HTMLCanvasElement) {
 		this.context = this.canvas.getContext('2d');
 		this.view = new View(new Coordinate(0, 0), this.canvas.width, this.canvas.height);
 		this.ship = this.createShip();
 		this.resetScore();
+		this.gameMessage = new GameMessage(this.context, this.view);
 	}
 
 	public move() {
@@ -27,7 +30,7 @@ export class Game {
 		}
 
 		if (this.isEndOfGame()) {
-			this.hintRestart();
+			this.gameMessage.restart();
 			return;
 		}
 
@@ -45,7 +48,7 @@ export class Game {
 
 		this.ship.move(this.context);
 
-		this.hintScore();
+		this.gameMessage.score(this.score);
 	}
 
 	public moveShipLeft() {
@@ -59,7 +62,7 @@ export class Game {
 	public pause() {
 		if (this.ship.isVisible) {
 			this.isPaused = !this.isPaused;
-			this.hintPause();
+			this.gameMessage.pause(this.isPaused);
 		}
 	}
 
@@ -148,27 +151,6 @@ export class Game {
 
 	private createEnemy() {
 		this.enemies.push(new EnemyFactory(this.canvas.width).create());
-	}
-
-	private hintRestart() {
-		this.context.font = "32px Courier, monospace";
-		this.context.clearRect(0, this.view.height / 2 - 25, this.view.width, 40);
-		this.context.fillText("The end. Press 'R' to restart the game.", 25, this.view.height / 2);
-	}
-
-	private hintScore() {
-		this.context.font = "10px Courier, monospace";
-		let gap = (this.score + "").length * 5 + 5;
-		this.context.clearRect(this.view.width - gap, 0, gap, 14);
-		this.context.fillText(this.score, this.view.width - gap, 10);
-	}
-
-	public hintPause() {
-		this.context.clearRect(this.view.width / 2 - 50, this.view.height / 2 - 50, 100, 40);
-		if (this.isPaused) {
-			this.context.font = "32px Courier, monospace";
-			this.context.fillText("Pause", this.view.width / 2 - 50, this.view.height / 2 - 20);
-		}
 	}
 
 	private resetScore() {
