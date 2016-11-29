@@ -5,18 +5,18 @@ import { View } from "./view"
 
 export class Ship extends MovableObject {
 	public get view(): View {
-		return new View(this.coordinate.moveLeft(this.width()), this.width() * 2 + 1, this.height());
+		return new View(this.coordinate.moveLeft(this.width), this.width * 2 + 1, this.height);
 	}
 
 	public constructor(coordinate: Coordinate) {
 		super(coordinate);
 	}
 
-	public width(): number {
+	public get width(): number {
 		return 5;
 	}
 
-	public height(): number {
+	public get height(): number {
 		return 5;
 	}
 
@@ -31,13 +31,11 @@ export class Ship extends MovableObject {
 	public move(context) {
 		context.beginPath();
 		context.moveTo(this.coordinate.x, this.coordinate.y);
-		context.lineTo(this.coordinate.x - this.width(), this.coordinate.y + this.height());
-		context.lineTo(this.coordinate.x + this.width(), this.coordinate.y + this.height());
+		context.lineTo(this.coordinate.x - this.width, this.coordinate.y + this.height);
+		context.lineTo(this.coordinate.x + this.width, this.coordinate.y + this.height);
 		//context.lineTo(this.x, this.y);
 		//context.stroke();
 		context.fill();
-
-		//context.strokeRect(this.coordinate.x - this.width(), this.coordinate.y, this.width() * 2 + 1, this.height());
 	}
 
 	public moveLeft(context) {
@@ -61,6 +59,6 @@ export class Ship extends MovableObject {
 	}
 
 	protected clear(context) {
-		context.clearRect(this.coordinate.x - this.width(), this.coordinate.y, this.width() * 2, this.height());
+		context.clearRect(this.coordinate.x - this.width, this.coordinate.y, this.width * 2, this.height);
 	}
 }

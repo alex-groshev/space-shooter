@@ -6,11 +6,11 @@ export class Projectile extends MovableObject {
 		super(coordinate);
 	}
 
-	public width(): number {
+	public get width(): number {
 		return 1;
 	}
 
-	public height(): number {
+	public get height(): number {
 		return 1;
 	}
 

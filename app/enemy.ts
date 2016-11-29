@@ -6,11 +6,11 @@ export class Enemy extends MovableObject {
 		super(coordinate);
 	}
 
-	public width(): number {
+	public get width(): number {
 		return 5;
 	}
 
-	public height(): number {
+	public get height(): number {
 		return 5;
 	}
 

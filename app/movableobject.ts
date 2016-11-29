@@ -14,7 +14,7 @@ export abstract class MovableObject {
 	}
 
 	public get view(): View {
-		return new View(this.coordinate, this.width(), this.height());
+		return new View(this.coordinate, this.width, this.height);
 	}
 
 	public constructor(protected coordinate: Coordinate) { }
@@ -25,9 +25,9 @@ export abstract class MovableObject {
 
 	public inView(view: View): boolean {
 		if (this.coordinate.x < view.coordinate.x + view.width &&
-			this.coordinate.x + this.width() > view.coordinate.x &&
+			this.coordinate.x + this.width > view.coordinate.x &&
 			this.coordinate.y < view.coordinate.y + view.height &&
-			this.height() + this.coordinate.y > view.coordinate.y) {
+			this.height + this.coordinate.y > view.coordinate.y) {
 			return true;
 		}
 		return false;
@@ -49,20 +49,20 @@ export abstract class MovableObject {
 	}
 
 	protected clear(context) {
-		context.clearRect(this.coordinate.x, this.coordinate.y, this.width(), this.height());
+		context.clearRect(this.coordinate.x, this.coordinate.y, this.width, this.height);
 	}
 
 	protected draw(context) {
-		context.fillRect(this.coordinate.x, this.coordinate.y, this.width(), this.height());
+		context.fillRect(this.coordinate.x, this.coordinate.y, this.width, this.height);
 	}
 
 	private hide() {
 		this.visible = false;
 	}
 
-	public abstract height(): number;
+	public abstract get height(): number;
 
-	public abstract width(): number;
+	public abstract get width(): number;
 
 	protected abstract nextCoordinate(): Coordinate;
 
