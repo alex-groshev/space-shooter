@@ -55,11 +55,15 @@ export class Game {
 	}
 
 	public moveShipLeft() {
-		this.ship.moveLeft(this.context);
+		if (!this.isPaused && this.ship.isVisible) {
+			this.ship.moveLeft(this.context);
+		}
 	}
 
 	public moveShipRight() {
-		this.ship.moveRight(this.context);
+		if (!this.isPaused && this.ship.isVisible) {
+			this.ship.moveRight(this.context);
+		}
 	}
 
 	public pause() {
@@ -75,6 +79,8 @@ export class Game {
 		this.resetScore();
 		this.ship = this.createShip();
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.isPaused = false;
+		this.isShootingMode = false;
 	}
 
 	public toggleFireMode() {

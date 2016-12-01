@@ -30,6 +30,8 @@ function onKeyDown(e) {
 	} else if (e.keyCode == '80') {
 		game.pause();
 	} else if (e.keyCode == '82') {
+		leftMove = false;
+		rightMove = false;
 		game.restart();
 	}
 }
