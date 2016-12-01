@@ -14,6 +14,7 @@ export class Game {
 	private enemies: MovableObject[] = [];
 	private score: number;
 	private isPaused: boolean = false;
+	private isShootingMode: boolean = false;
 	private gameMessage: GameMessage;
 
 	public constructor(private canvas: HTMLCanvasElement) {
@@ -49,6 +50,8 @@ export class Game {
 		this.ship.move(this.context);
 
 		this.gameMessage.score(this.score);
+
+		this.tryShoot();
 	}
 
 	public moveShipLeft() {
@@ -74,8 +77,8 @@ export class Game {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 
-	public shipFire() {
-		this.projectiles.push(this.ship.fire());
+	public toggleFireMode() {
+		this.isShootingMode = !this.isShootingMode;
 	}
 
 	private isEndOfGame(): boolean {
@@ -155,5 +158,14 @@ export class Game {
 
 	private resetScore() {
 		this.score = 0;
+	}
+
+	private tryShoot() {
+		if (this.isShootingMode) {
+			let projectile = this.ship.shoot();
+			if (projectile != null) {
+				this.projectiles.push(projectile);
+			}
+		}
 	}
 }

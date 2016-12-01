@@ -3,8 +3,16 @@ import {Game} from "./game"
 let canvas = document.getElementById('field');
 let game : Game = new Game(<HTMLCanvasElement>canvas);
 let prevX;
+let leftMove: boolean = false;
+let rightMove: boolean = false;
 
 function draw() {
+	if (leftMove) {
+		game.moveShipLeft();
+	}
+	if (rightMove) {
+		game.moveShipRight();
+	}
 	game.move();
 	window.requestAnimationFrame(draw);
 }
@@ -12,19 +20,13 @@ function draw() {
 function onKeyDown(e) {
 	e = e || window.event;
 	if (e.keyCode == '32') {
-		game.shipFire();
-	}
-	else if (e.keyCode == '38') {
-		// up arrow
-	}
-	else if (e.keyCode == '40') {
-		// down arrow
-	}
-	else if (e.keyCode == '37') {
-		game.moveShipLeft();
-	}
-	else if (e.keyCode == '39') {
-		game.moveShipRight();
+		game.toggleFireMode();
+	} else if (e.keyCode == '37') {
+		leftMove = true;
+		rightMove = false;
+	} else if (e.keyCode == '39') {
+		leftMove = false;
+		rightMove = true;
 	} else if (e.keyCode == '80') {
 		game.pause();
 	} else if (e.keyCode == '82') {
@@ -33,15 +35,18 @@ function onKeyDown(e) {
 }
 
 function onMouseDown() {
-	game.shipFire();
+	game.toggleFireMode();
 }
 
 function onMouseMove(e) {
+	leftMove = false;
+	rightMove = false;
+
 	var x = e.clientX;
 	if (x > prevX) {
-		game.moveShipRight();
+		rightMove = true;
 	} else if (x < prevX) {
-		game.moveShipLeft();
+		leftMove = true;
 	}
 	prevX = x;
 }

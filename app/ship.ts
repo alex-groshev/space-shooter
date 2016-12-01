@@ -2,14 +2,19 @@ import { Coordinate } from "./coordinate"
 import { MovableObject } from "./movableobject"
 import { Projectile } from "./projectile"
 import { View } from "./view"
+import { ShootingStrategy } from "./shooting/shooting_strategy"
+import { BasicShootingStrategy } from "./shooting/basic_shooting_strategy"
 
 export class Ship extends MovableObject {
+	private shootingStrategy: ShootingStrategy;
+
 	public get view(): View {
 		return new View(this.coordinate.moveLeft(this.width), this.width * 2 + 1, this.height);
 	}
 
 	public constructor(coordinate: Coordinate) {
 		super(coordinate);
+		this.shootingStrategy = new BasicShootingStrategy();
 	}
 
 	public get width(): number {
@@ -25,7 +30,7 @@ export class Ship extends MovableObject {
 	}
 
 	protected pixelsPerMove(): number {
-		return 5;
+		return 1;
 	}
 
 	public move(context) {
@@ -52,10 +57,11 @@ export class Ship extends MovableObject {
 		}
 	}
 
-	public fire(): Projectile {
+	public shoot(): Projectile {
 		if (this.isVisible) {
-			return new Projectile(new Coordinate(this.coordinate.x, this.coordinate.y - 1));
+			return this.shootingStrategy.shoot(new Coordinate(this.coordinate.x, this.coordinate.y - 1));
 		}
+		return null;
 	}
 
 	protected clear(context) {
