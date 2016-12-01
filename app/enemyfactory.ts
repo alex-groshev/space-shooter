@@ -1,4 +1,4 @@
-import { Coordinate } from "./coordinate"
+import { Coordinate } from "./common/coordinate"
 import { Enemy } from "./enemy"
 
 export class EnemyFactory {

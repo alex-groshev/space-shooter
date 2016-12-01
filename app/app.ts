@@ -1,4 +1,4 @@
-import {Game} from "./game"
+import {Game} from "./game/game"
 
 let canvas = document.getElementById('field');
 let game : Game = new Game(<HTMLCanvasElement>canvas);

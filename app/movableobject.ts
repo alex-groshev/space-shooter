@@ -1,5 +1,5 @@
-import { View } from "./view"
-import { Coordinate } from "./coordinate"
+import { Coordinate } from "./common/coordinate"
+import { View } from "./common/view"
 
 export abstract class MovableObject {
 	private visible: boolean = true;

@@ -1,10 +1,10 @@
-import { Coordinate } from "./coordinate"
-import { Enemy } from "./enemy"
-import { EnemyFactory } from "./enemyfactory"
+import { Coordinate } from "../common/coordinate"
+import { Enemy } from "../enemy"
+import { EnemyFactory } from "../enemyfactory"
 import { GameMessage } from "./gamemessage"
-import { MovableObject } from "./movableobject"
-import { Ship } from "./ship"
-import { View } from "./view"
+import { MovableObject } from "../movableobject"
+import { Ship } from "../ship"
+import { View } from "../common/view"
 
 export class Game {
 	private context;

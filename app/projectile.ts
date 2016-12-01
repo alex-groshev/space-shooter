@@ -1,4 +1,4 @@
-import { Coordinate } from "./coordinate"
+import { Coordinate } from "./common/coordinate"
 import { MovableObject } from "./movableobject"
 
 export class Projectile extends MovableObject {

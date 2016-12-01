@@ -1,4 +1,4 @@
-import { View } from "./view"
+import { View } from "../common/view"
 
 export class GameMessage {
 	private fontBig: string = "32px Courier, monospace";

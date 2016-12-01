@@ -1,7 +1,7 @@
-import { Coordinate } from "./coordinate"
+import { Coordinate } from "./common/coordinate"
 import { MovableObject } from "./movableobject"
 import { Projectile } from "./projectile"
-import { View } from "./view"
+import { View } from "./common/view"
 import { ShootingStrategy } from "./shooting/shooting_strategy"
 import { BasicShootingStrategy } from "./shooting/basic_shooting_strategy"
 
