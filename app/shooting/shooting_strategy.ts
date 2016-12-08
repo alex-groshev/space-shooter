@@ -1,4 +1,4 @@
-import { Coordinate } from "../coordinate"
+import { Coordinate } from "../common/coordinate"
 import { Projectile } from "../projectile"
 
 export interface ShootingStrategy {
